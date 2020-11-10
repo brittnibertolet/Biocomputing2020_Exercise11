@@ -35,3 +35,13 @@ for(i in 1:timesteps){
   }
 }
 
+# make dataframe
+dat<-data.frame(time=1:(timesteps+1),N=N,M=M)
+
+#call ggplot
+library(ggplot2)
+# plot simulation
+ggplot(dat, aes(x=time))+
+  geom_line(aes(y=N), color="steelblue")+
+  geom_line(aes(y=M), color="darkred")+
+  theme_classic()
