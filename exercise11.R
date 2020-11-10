@@ -22,3 +22,16 @@ N=numeric(length=timesteps)
 N[1]=N0
 M=numeric(length=timesteps)
 M[1]=M0
+
+# simulate
+for(i in 1:timesteps){
+  if(i<200){
+    # drug introduced at i=200, before drug is introduced both pop grow at r=0.1
+    N[i+1] = N[i]+r0*N[i]*(1-(N[i]+M[i])/K)
+    M[i+1] = M[i]+r0*M[i]*(1-(N[i]+M[i])/K)
+  }else{ #after drug introduced, non-mutant declines at r=-0.1, mutant grows at r=0.05
+    M[i+1] = M[i]+rM*M[i]*(1-(N[i]+M[i])/K)
+    N[i+1] = N[i]+rN*N[i]*(1-(N[i]+M[i])/K)
+  }
+}
+
