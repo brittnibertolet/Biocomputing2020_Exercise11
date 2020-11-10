@@ -16,3 +16,9 @@ rM= 0.05
 N0=99
 M0=1
 timesteps=600
+
+# create vector to store N's and set initial N
+N=numeric(length=timesteps)
+N[1]=N0
+M=numeric(length=timesteps)
+M[1]=M0
