@@ -21,7 +21,7 @@ rm = .1
 N0 = 99
 M0 = 1
 K = 1000000
-timesteps = 1000 # <- this isn't supposed to be one, change it
+timesteps = 1000 
 # not sure how many timesteps we need to run the model to equilibrium?
 # at 10000 it's definitely at equilibrium; looks like it gets there a LOT earlier,
   # looks like it's definitely at equilibrium by 200
