@@ -18,11 +18,15 @@ M[1]=M0
 # simulate
 for(t in 1:(timesteps-1)){
   if (t<=49){
-    rN=0.1
-    rM=0.1
+    # no drug, no mutation yet
     N[t+1] <- N[t]+0.1*N[t]*(1-(N[t]+M[t])/K)
-    M[t+1] <- M[t]+0.1*M[t]*(1-(N[t]+M[t])/K)
-    } else if (t>49){
+    M[t+1] <- M[t]+0.0*M[t]*(1-(N[t]+M[t])/K)
+    } else if (t>49 & t<175){
+      # no drug, mutation arises
+      N[t+1] <- N[t]+0.1*N[t]*(1-(N[t]+M[t])/K)
+      M[t+1] <- M[t]+0.1*M[t]*(1-(N[t]+M[t])/K)
+    } else if (t>=175){
+      # roughly equilibrium, drug added
       N[t+1] <- N[t]+(-0.1)*N[t]*(1-(N[t]+M[t])/K)
       M[t+1] <- M[t]+0.05*M[t]*(1-(N[t]+M[t])/K)
     }
@@ -38,7 +42,7 @@ sim2<-data.frame(name="sim2", time=1:length(M), M=M)
 ggplot()+
   geom_line(data=sim1, aes(x=time,y=N),col='blue')+
   geom_line(data=sim2, aes(x=time,y=M),col='red')+
-  scale_y_continuous(trans="log10")+
+  scale_y_log10()+
   ylab("cell growth")+
   theme_classic()
 
