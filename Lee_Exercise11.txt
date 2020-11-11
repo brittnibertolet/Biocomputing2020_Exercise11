@@ -14,7 +14,29 @@
 #   drug present --> rN = -0.1, rM = 0.05
 
 
+
 ## Steps
-# make dataframe with growth for each population
-#   3 columns: days, N growth, M growth
+# make dataframe with growth for each population and +/- drug
+#   3 columns: days, Npop, Mpop
+# for loop for Npop using equation and append to Npop vector
+# for loop with "if else" to start Mpop at 100 cells
+#   if: (Npop) output[i,2]<100 then (Mpop) output[i,3]=0
+#   else if: output[i,2]=100 then output[i,3]=1
+#   else: output[i,2]>100 then ***equation for Mpop***
+# for loop for recognizing when it reaches equilibrium
+#   looking for when output[i-1,2]=output[i,2]
+#   if: output[i-1,2] != output[i,2] then keep appending with Npop equation
+#   else if: output[i-1,2]=output[i,2] STOP
+#   else?
+# for loop to start drug equations (new r) and append to each pop
 # load ggplot and plot line graph
+
+# set timesteps to simulate
+days <- 1:100
+
+# place to store output
+output <- data.frame(days=days, Npop=NA, Mpop=NA)
+
+# establish initial populations for both
+output[1,2]=2
+
