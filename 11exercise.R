@@ -10,7 +10,7 @@
 library(ggplot2)
 
 ##Step 2: Set up the constant variables
-timepts = 1000 #in days
+timepts = 500 #in days
 #Normal rates of growth
 rN = 0.1
 rM = 0.1
