@@ -32,14 +32,18 @@ for(i in 2:timesteps){
 #convert wide data to long form 
 Ns2 <- data.frame(time=c(Ns$time,Ns$time),N=c(Ns$nonmutant,Ns$mutant),cell=rep(c("nonmutant","mutant"),each=timesteps))
 
-# plot simulation
+# plot simulation as a variale to export
 library(ggplot2)
-ggplot(data=Ns2,aes(x=time,y=N,color=cell)) + 
+fig1<- ggplot(data=Ns2,aes(x=time,y=N,color=cell)) + 
   geom_line() +
   theme_classic()
 
 #export graph
-
+ggsave(filename = "fig1.pdf",
+       plot = fig1,
+       width = 8,
+       height = 5,
+       dpi = 300)
 
 
 
