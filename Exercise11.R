@@ -32,9 +32,12 @@ for(t in 1:(timesteps-1)){
 
 #Need to turn data into a DataFrame before plotting in ggplot
 NormPop=data.frame(time=1:timesteps, CellType="Normal", CellCount=NormCells)
-MutPop=data.frame(time=1:timesteps, CellType="Mutant", CellCount=MutCells)
+MutPop=data.frame(time=1:timesteps, CellType="Mutant", CellCount=MutCells) 
+#Adding the CellType is better for long dataframes and will let us graph by type 
+#(i.e. one line for mutant one for normal) on ggplot
 
-TotalPop=rbind(NormPop, MutPop)
+TotalPop=rbind(NormPop, MutPop) #rbind lets you "stack" 2 dataframes on top of eachother
+                                #to make a "long dataframe" which ggplot processes better
 
 library(ggplot2)
 ggplot(data = TotalPop, aes(x=time, y=CellCount, col=CellType))+
