@@ -1,16 +1,9 @@
 # Exercise 11 - Dynamic Modeling
 
-### we started with this basic model
-# time points to simulate over (simulate for 100 years)
-# a place to store population sizes (value of state variable through time)
-# values for our parameters (r=0.2, K=100)
-# a loop for simulating
-# initial starting place; N0=2
-
 # set initial values and parameters
 r=0.1
 K=1000000
-# set a time horizion
+# set a time horizon
 times<-1:50
 # place to store output
 output<-matrix(data=NA,nrow=length(times),ncol=3)
