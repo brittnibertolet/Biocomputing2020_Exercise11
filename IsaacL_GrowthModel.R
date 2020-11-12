@@ -3,10 +3,10 @@
 #Parameters
 K <- 1000000 #carrying capacity
 rN<- 0.1 #normal growth for normal and mutant cells w no drug
-rNnd<- -0.1 #normal cells decline no drug
+rNnd<- -0.1 #normal cells decline 
 rMd<- 0.05 #mutant growth with drug
 
-time <- 1:500 #time values for graphing
+time <- 1:1000 #time values for graphing
 
 #Initialize sites for outputs
 
@@ -22,41 +22,25 @@ resevoirM[1] <- 1 #first mutated cell
 
 for(i in 2:length(time)){
   #start with normal growth
+  if(i<=100){
   resevoirM[i] <- resevoirM[i-1] + rN*resevoirM[i-1]*(1-(resevoirM[i-1]+resevoirN[i-1])/K)
   resevoirN[i] <- resevoirN[i-1] + rN*resevoirN[i-1]*(1-(resevoirM[i-1]+resevoirN[i-1])/K)
+  }else if(i>100){
+    resevoirM[100]<-5.755493e+03
+
+    resevoirM[i]<- resevoirM[i-1] + rMd*resevoirM[i-1]*(1-(resevoirM[i-1]+resevoirN[i-1])/K)
+    resevoirN[i]<- resevoirN[i-1] + rNnd*resevoirN[i-1]*(1-(resevoirM[i-1]+resevoirN[i-1])/K)
+  }
 }
   
 #make data readable by ggplot in a dataframe
 frame <- data.frame(Time = time, N=resevoirN,M=resevoirM)
 library(ggplot2)
 
-ggplot(data=frame, aes(x=time))+
-  geom_line(aes(y=N))+
+ggplot(data=frame, aes(x=time, y=N))+
   geom_line(aes(y=M))+
   theme_classic()
 
 
 
-
-
-
-
-#drug growth
-  
-  resevoirM[i]<- resevoirM[i-1] + rNnd*resevoirM[i-1]*(1-(resevoirM[i-1]+resevoirN[i-1])/K)
-  resevoirN[i]<- resevoirN[i-1] + rNnd*resevoirN[i-1]*(1-(resevoirM[i-1]+resevoirN[i-1])/K)
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-}
   
