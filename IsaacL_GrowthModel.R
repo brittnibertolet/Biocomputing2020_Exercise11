@@ -6,7 +6,7 @@ rN<- 0.1 #normal growth for normal and mutant cells w no drug
 rNnd<- -0.1 #normal cells decline no drug
 rMd<- 0.05 #mutant growth with drug
 
-time <- 1:1000 #time values for graphing
+time <- 1:500 #time values for graphing
 
 #Initialize sites for outputs
 
@@ -26,6 +26,14 @@ for(i in 2:length(time)){
   resevoirN[i] <- resevoirN[i-1] + rN*resevoirN[i-1]*(1-(resevoirM[i-1]+resevoirN[i-1])/K)
 }
   
+#make data readable by ggplot in a dataframe
+frame <- data.frame(Time = time, N=resevoirN,M=resevoirM)
+library(ggplot2)
+
+ggplot(data=frame, aes(x=time))+
+  geom_line(aes(y=N))+
+  geom_line(aes(y=M))+
+  theme_classic()
 
 
 
