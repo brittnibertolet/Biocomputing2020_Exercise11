@@ -38,6 +38,7 @@ for (i in 2:length(1:time)){
     N[i]=N[i-1]+r*N[i-1]*(1-(N[i-1]+M[i-1])/K)
     # after reach equilibrium, introduce drug
   }else if (i>250){
+    # set as previous value so M doesn't go to 0
     M[250]=9944.072
     # growth rate of mutants is half
     M[i]=(M[i-1]+0.5*r*M[i-1]*(1-(N[i-1]+M[i-1])/K)) 
