@@ -1,0 +1,59 @@
+### Exercise 11 Dynamic Modeling
+## generate a script that simulates growth of 2 sub-populations in the tumor to equilibrium followed by drug treatment
+## plotting results on a line graph
+## model equations:
+  # Mt+1=Mt+rM*Mt*(1-(Nt+Mt)/K)
+  # Nt+1=Nt+rN*Nt*(1-(Nt+Mt)/K)
+
+# defining parameters for normal cell 
+# initial values
+rN=0.1 
+N0=99
+
+# defining parameters for mutant cells
+# initial values
+rM=0.1
+M0=1
+
+# setting time steps to simulate
+timesteps <- 1:1000
+K=1000000
+
+# creating a vector to store Ns and setting initial N
+Ns=numeric(length=timesteps)
+Ns[1]=N0
+
+# creating a vector to store Ms and setting initial M
+Ms=numeric(length=timesteps)
+Ms[1]=M0
+
+# simulating post first mutation until equilibrium is reached (i=300) with for loop
+for(i in 1:(timesteps-1)) {
+  if(t<300) {
+    Ns[i+1] <- Ns[i]+(rN*Ns[i]*(1-((Ns[i]+Ms[i])/K)))
+    Ms[i+1] <- Ms[i]+(rM*Ms[i]*(1-((Ns[i]+Ms[i])/K)))
+  }
+  else{
+    rN=-0.1
+    rM=0.05
+    Ns[i+1] <- Ns[i]+(rN*Ns[i]*(1-((Ns[i]+Ms[i])/K)))
+    Ms[i+1] <- Ms[i]+(rM*Ms[i]*(1-((Ns[i]+Ms[i])/K)))
+  }
+}
+
+## plotting results 
+
+# load package to use
+library(ggplot2)
+
+# making a line graph
+simulation <- data.frame(time=1:length(Ns),N=Ns, M=Ms)
+ggplot(data=simulation) +
+  geom_line(aes(x=time, y=N, color="Non-Mutant")) +
+  geom_line(aes(x=time, y=N, color="Mutant")) +
+  theme(legend.position="top")+
+  scale=color_manual(values=c("Non=Mutant"="blue", "Mutant"="red")) +
+  xlab("Time") + 
+  ylab("Number of Cells")
+  theme_classic() 
+ 
