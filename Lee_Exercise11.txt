@@ -22,16 +22,13 @@
 #   if: (Npop) output[i,2]<100 then (Mpop) output[i,3]=0
 #   else if: output[i,2]=100 then output[i,3]=1
 #   else: output[i,2]>100 then ***equation for Mpop***
-# for loop for recognizing when it reaches equilibrium
-#   looking for when output[i-1,2]=output[i,2]
-#   if: output[i-1,2] != output[i,2] then keep appending with Npop equation
-#   else if: output[i-1,2]=output[i,2] STOP
-#   else?
+# for loop for after drug administered (day 150)
+#   when day>=150 --> new equations with new r values
 # for loop to start drug equations (new r) and append to each pop
 # load ggplot and plot line graph
 
 # set timesteps to simulate
-days <- 1:1000
+days <- 1:730
 
 # place to store output
 output <- data.frame(days=days, Npop=0, Mpop=0)
@@ -61,6 +58,32 @@ for(i in 1:nrow(output)){
   }
 }
 
+## Drug given on day 150
+# Npop and Mpop with new r values
+rNdrug = -0.1
+rMdrug = 0.05
+
+for(i in 1:nrow(output)){
+  if(output[i,1]>=150){
+    output[i,2]=output[(i-1),2]+rNdrug*output[(i-1),2]*(1-(output[(i-1),2]+output[(i-1),3])/K)
+    output[i,3]=output[(i-1),3]+rMdrug*output[(i-1),3]*(1-(output[(i-1),2]+output[(i-1),3])/K)
+  }else{
+    output[i,2]=output[i,2]
+    output[i,3]=output[i,3]
+  }
+}
+
+# plot
+# non-mutant pop is green
+# mutant pop is red
+# drug administered day 150
+library(ggplot2)
+ggplot(output, aes(x = days)) +
+  geom_line(aes(y = Npop), color = "green") +
+  geom_line(aes(y = Mpop), color = "red") +
+    xlab("Days") +
+    ylab("Cells") +
+  theme_classic()
 
 
 
