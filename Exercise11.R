@@ -14,8 +14,8 @@ K<- 1000000
 timesteps<-500
 
 #Set an output to population
-N<-numeric(length = length(timesteps))
-M<-numeric(length = length(timesteps))
+N<-numeric(length=length(timesteps))
+M<-numeric(length=length(timesteps))
 
 #Set N0 and M0
 N0<-99
@@ -25,26 +25,26 @@ M[1]<-M0
 
 #Use a for loop to simulate in time
 for(i in 1:timesteps){
-  if(i<100){
-    M[i+1] = M[i]+rM2*(1-(N[i]+M[i])/K)
-    N[i+1] = N[i]+rN2*(1-(N[i]+M[i])/K)
-  }else if(i>=100){
-    M[i+1] = M[i]+rM*(1-(N[i]+M[i])/K)
-    N[i+1] = N[i]+rN*(1-(N[i]+M[i])/K)
+  if(i<200){
+    M[i+1] = M[i]+rM*M[i]*(1-(N[i]+M[i])/K)
+    N[i+1] = N[i]+rN*N[i]*(1-(N[i]+M[i])/K)
+  }else{
+    M[i+1] = M[i]+rM2*M[i]*(1-(N[i]+M[i])/K)
+    N[i+1] = N[i]+rN2*N[i]*(1-(N[i]+M[i])/K)
   }
 }
 
-#Set up a drug treatment event to occur sometime at t around 150
-NormalStrain<-data.frame(time=1:timesteps, celltype="normal", cellcount=N)
-MutantStrain<-data.frame(time=1:timesteps, celltype="mutant", cellcount=M)
-TotalCells<-rbind(NormalStrain, MutantStrain)
-
+#Set up a drug treatment event to occur sometime at t around 200
+TotalCells<-data.frame(time=1:(timesteps+1),N=N,M=M)
 
 library(ggplot2)
-ggplot(data = TotalCells, aes(x=time, y=cellcount, col=celltype)) +
-  geom_line()
-
-
+ggplot(TotalCells, aes(x=time, color = N))+
+  geom_line(aes(y=N), color="red") +
+  geom_line(aes(y=M), color="blue") +
+  xlab("Time") +
+  ylab("Number of Cells") +
+  geom_vline(xintercept = c(200), linetype = "dotted") +
+  theme_classic()
 
 
 
