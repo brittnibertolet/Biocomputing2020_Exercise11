@@ -27,9 +27,9 @@ Ns[1]=N0
 Ms=numeric(length=timesteps)
 Ms[1]=M0
 
-# simulating post first mutation until equilibrium is reached (i=300) with for loop
+# simulating post first mutation until equilibrium is reached (i=150) with for loop
 for(i in 1:(timesteps-1)) {
-  if(t<300) {
+  if(i<150) {
     Ns[i+1] <- Ns[i]+(rN*Ns[i]*(1-((Ns[i]+Ms[i])/K)))
     Ms[i+1] <- Ms[i]+(rM*Ms[i]*(1-((Ns[i]+Ms[i])/K)))
   }
