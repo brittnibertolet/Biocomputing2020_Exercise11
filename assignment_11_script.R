@@ -22,26 +22,37 @@
 
 
 # Step 1: define parameters
-
+rMnodrug=0.1
+rNnodrug=0.1
+rMdrug=-0.1
+K=1000000
 
 # step 2: set time span and increments to simulate
-
+times<-1:1000
 
 # Step 3: place to store output need something as long as times we want to simulate
-
+output<-matrix(data=NA, nrow =length(times), ncol=3)
+output[,1]=times
 
 # Step 4: initial population size (where we start)
-
+output[1,2]=2
 
 # K=1000000 so expect it to end up at 1000000 at the end
 # put a - in front of index, get rid of that entry
 
 # Step 5: for loop, the dynamic part of the dynamic model
+for (i in times[-1]) {
+  output[i,2]=output[(i-1),2]+rNnodrug*output[(i-1),2]*(1-output[(i-1),2]/K)
+}
 
+for (i in times[-1]) {
+  output[i,3]=output[(i-1),3]+r*output[(i-1),3]*(1-output[(i-1),3]/K)
+}
 
 
 #can check this worked by putting head(output) or tail(output) in the console
-
+head(output)
+tail(output)
 # plot the results
 ## note that ggplot doesn't like matrices, make it a data frame
 
